@@ -8,10 +8,15 @@ from sqlalchemy.orm import Mapped, MappedColumn
 
 from db.database import Base
 
-class Books(Base):
-    __tablename__ = 'Books'
+class Book(Base):
+    __tablename__ = 'book'
+    ''' 
+    Remarque : En Python, les attributs précédés d'un underscore (_) ne sont pas réellement privés.
+    C'est juste une convention pour indiquer qu'ils sont destinés à un usage interne.
+    Il est toujours possible d'y accéder depuis l'extérieur de la classe (ex: instance._id).
+    '''
 
-    # Attributs privés
+    #liste des attributs
     _id: Mapped[int] = MappedColumn(Integer, primary_key=True)
     _title: Mapped[str] = MappedColumn(String(200), nullable=False)
     _nb_pages: Mapped[int] = MappedColumn(Integer, nullable=False)
