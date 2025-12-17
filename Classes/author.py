@@ -7,6 +7,8 @@ from sqlalchemy import Integer, String, Date
 from sqlalchemy.orm import Mapped, MappedColumn
 from person import Person
 
+from db.database import Base
+
 
 class Author(Person):
     __tablename__ = 'author'
