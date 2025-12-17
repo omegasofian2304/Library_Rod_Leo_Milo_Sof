@@ -5,10 +5,10 @@ Projet : Création du fichier qui contiendra la classe Author
 """
 from sqlalchemy import Integer, String, Date
 from sqlalchemy.orm import Mapped, MappedColumn
+from person import Person
 
-from db.database import Base
 
-class Author(Base):
+class Author(Person):
     __tablename__ = 'author'
     ''' 
     Remarque : En Python, les attributs précédés d'un underscore (_) ne sont pas réellement privés.
