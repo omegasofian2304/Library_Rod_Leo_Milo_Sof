@@ -1,17 +1,15 @@
 """
 Auteur : Rodrigo Silva Riço
 Date : 17.12.2025
-Projet : Création du fichier qui contiendra la classe Author
+Projet : Création du fichier qui contiendra la classe Customer
 """
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, MappedColumn
 from person import Person
 
-from db.database import Base
 
-
-class Author(Person):
-    __tablename__ = 'author'
+class Customer(Person):
+    __tablename__ = 'customer'
     ''' 
     Remarque : En Python, les attributs précédés d'un underscore (_) ne sont pas réellement privés.
     C'est juste une convention pour indiquer qu'ils sont destinés à un usage interne.
@@ -20,4 +18,5 @@ class Author(Person):
 
     #liste des attributs
     _id: Mapped[int] = MappedColumn(Integer, primary_key=True)
-    _nickName: Mapped[str] = MappedColumn(String(50), nullable=False)
+    _email: Mapped[str] = MappedColumn(String(50), nullable=False)
+    _fine: Mapped[int] = MappedColumn(Integer, nullable=False)
