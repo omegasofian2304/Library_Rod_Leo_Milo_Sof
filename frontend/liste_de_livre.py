@@ -276,9 +276,10 @@ class LibraryApp(ctk.CTk):
             self.menu_frame = ctk.CTkFrame(
                 self,
                 fg_color="#FFB6C1",
-                corner_radius=10
+                corner_radius=10,
+                width=300,
+                height=240
             )
-            self.menu_frame.place(x=20, y=90, width=300, height=240)
 
             # Boutons du menu
             menu_buttons = [
@@ -312,6 +313,7 @@ class LibraryApp(ctk.CTk):
             self.menu_frame.grid_columnconfigure(0, weight=1)
             self.menu_frame.grid_columnconfigure(1, weight=1)
 
+        self.menu_frame.place(x=20, y=90)
         self.menu_frame.lift()
         self.menu_visible = True
 
