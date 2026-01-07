@@ -16,7 +16,7 @@ class Customer(Person):
     Il est toujours possible d'y accéder depuis l'extérieur de la classe (ex: instance._id).
     '''
 
-    #liste des attributs
+    # liste des attributs
     _id: Mapped[int] = MappedColumn(Integer, primary_key=True)
     _email: Mapped[str] = MappedColumn(String(50), nullable=False)
     _fine: Mapped[int] = MappedColumn(Integer, nullable=False)
