@@ -14,6 +14,6 @@ class Person(Base):
 
     # liste des attributs
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    lastname: Mapped[str] = mapped_column(String(50), nullable=False)
-    firstname: Mapped[str] = mapped_column(String(50), nullable=False)
-    birthdate: Mapped[Date] = mapped_column(Date, nullable=False)
+    name: Mapped[str] = mapped_column(String(50), nullable=False)
+    location: Mapped[str] = mapped_column(String(50), nullable=False)
+    birthDate: Mapped[Date] = mapped_column(Date, nullable=False)

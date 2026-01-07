@@ -9,7 +9,7 @@ from sqlalchemy.orm import Mapped, MappedColumn
 from db.database import Base
 
 class Book(Base):
-    __tablename__ = 'book'
+
     ''' 
     Remarque : En Python, les attributs précédés d'un underscore (_) ne sont pas réellement privés.
     C'est juste une convention pour indiquer qu'ils sont destinés à un usage interne.
