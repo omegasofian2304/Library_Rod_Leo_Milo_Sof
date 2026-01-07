@@ -31,4 +31,4 @@ class Book(Base):
 
     # création
     publisher_id: Mapped[int] = mapped_column(ForeignKey("publishers.id"))
-    publisher: Mapped["publisher"] = relationship("publisher")
+    publisher: Mapped["Publisher"] = relationship("publisher")

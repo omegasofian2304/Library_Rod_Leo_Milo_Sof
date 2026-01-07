@@ -4,9 +4,9 @@ Date : 17.13.2025
 Projet : Création du fichier qui contiendra la classe borrow
 """
 
-from sqlalchemy import Integer, String, Date, ForeignKey, Boolean
+from sqlalchemy import Integer, Date, ForeignKey, Boolean
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from publisher import Publisher
+
 from books import Book
 from customer import Customer
 
@@ -29,7 +29,7 @@ class Borrow(Base):
 
     # création des relations
     book_id: Mapped[int] = mapped_column(ForeignKey("customer.id"))
-    book: Mapped["book"] = relationship("Customer")
+    book: Mapped["Book"] = relationship("Customer")
 
     customer_id: Mapped[int] = mapped_column(ForeignKey("customer.id"))
-    customer: Mapped["customer"] = relationship("Customer")
+    customer: Mapped["Customer"] = relationship("Customer")
