@@ -1,6 +1,6 @@
 """
-Auteur : [Ton nom]
-Date : 30.12.2025
+Auteur : Sofian Hussein et Rodrigo Silva Riço
+Date : 07.01.2026
 Projet : Création du fichier qui contiendra la classe Employee
 """
 from sqlalchemy import Integer, String, Date, Float, Boolean, ForeignKey
