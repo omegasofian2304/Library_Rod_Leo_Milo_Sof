@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from overlay_book_select import OverlayWindow
+from PIL import Image
 # Couleurs
 dark_grey = "#BFBFBF"
 light_grey = "#D9D9D9"
@@ -39,9 +40,19 @@ class Book(ctk.CTkFrame):
 fr_header = ctk.CTkFrame(master=app, fg_color=dark_grey, corner_radius=20, height=150)
 fr_header.pack(padx=40, pady=40, anchor="w")
 
+
 # Logo
-fr_logo = ctk.CTkFrame(master=fr_header, fg_color="#AFAFAF", height=125, width=125)
+fr_logo = ctk.CTkFrame(master=fr_header, fg_color="transparent", height=125, width=125)
 fr_logo.pack(side="left", padx=20, pady=20)
+
+# Image du logo
+logo_image = ctk.CTkImage(
+    light_image=Image.open("logo.png"),
+    dark_image=Image.open("logo.png"),
+    size=(125, 125)
+)
+lbl_logo = ctk.CTkLabel(master=fr_logo, image=logo_image, text="")
+lbl_logo.pack(expand=True)
 
 # Contenu droit du header
 fr_header_right = ctk.CTkFrame(master=fr_header, fg_color="transparent")
