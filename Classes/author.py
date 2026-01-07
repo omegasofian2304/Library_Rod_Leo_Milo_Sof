@@ -3,7 +3,7 @@ Auteur : Rodrigo Silva Riço
 Date : 17.12.2025
 Projet : Création du fichier qui contiendra la classe Author
 """
-from sqlalchemy import Integer, String, Date
+from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, MappedColumn
 from person import Person
 
