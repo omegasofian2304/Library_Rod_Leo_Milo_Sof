@@ -5,7 +5,7 @@ Projet : Création du fichier qui contiendra la classe borrow
 """
 from sqlalchemy import Integer, Date, ForeignKey, Boolean
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from db.database import Base
+from Classes.base import Base
 
 
 class Borrow(Base):

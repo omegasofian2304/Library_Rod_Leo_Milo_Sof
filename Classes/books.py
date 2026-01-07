@@ -5,7 +5,7 @@ Projet : Création du fichier qui contiendra la classe Books
 """
 from sqlalchemy import Integer, String, Date, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from db.database import Base
+from Classes.base import Base
 
 
 class Book(Base):

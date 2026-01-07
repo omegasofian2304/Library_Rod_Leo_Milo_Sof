@@ -5,7 +5,7 @@ Projet : création du fichier de la classe "publisher".
 """
 from sqlalchemy import Integer, String, Date
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from db.database import Base
+from Classes.base import Base
 
 
 class Publisher(Base):

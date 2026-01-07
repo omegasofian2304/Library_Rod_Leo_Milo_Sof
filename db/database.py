@@ -1,25 +1,19 @@
 """
 Auteur : Sofian Hussein
 Date : 03.12.2025
-Projet : création du fichier de base qui accueillera la session, le moteur et la classe "Base".
+Projet : Fichier de base pour SQLAlchemy : engine, session et initialisation
 """
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from datetime import date
+from Classes.base import Base
 
 
-# Création de la classe qui sera la base pour tous les autres modèles
-class Base(DeclarativeBase):
-    pass
-
-
-# Créer le moteur sqlite
+# Création du moteur SQLite (echo=False pour ne pas afficher le SQL)
 DATABASE_URL = "sqlite:///./mydatabase.db"
+engine = create_engine(DATABASE_URL, echo=False)
 
-# echo=True pour afficher les logs dans la console
-engine = create_engine(DATABASE_URL, echo=True)
-
-# Création de session
+# Création des sessions
 SessionLocal = sessionmaker(bind=engine)
 
 
@@ -27,13 +21,18 @@ def get_session():
     return SessionLocal()
 
 
-# Fonction pour initialiser la base de données avec des données de test
 def init_database():
-    """Crée les tables et ajoute des données initiales"""
+    """
+    Crée toutes les tables et ajoute des données de test
+    """
+    # Importer les modèles avant création des tables
+    from Classes.person import Person
     from Classes.employee import Employee
     from Classes.author import Author
-    from Classes.publisher import Publisher
+    from Classes.customer import Customer
     from Classes.books import Book
+    from Classes.borrow import Borrow
+    from Classes.publisher import Publisher
 
     # Créer toutes les tables
     Base.metadata.create_all(bind=engine)
@@ -41,11 +40,8 @@ def init_database():
     session = get_session()
 
     try:
-        # Vérifier si un employé admin existe déjà
-        existing_employee = session.query(Employee).filter_by(_isAdmin=True).first()
-
-        if not existing_employee:
-            # Créer un employé admin
+        # Employé admin
+        if not session.query(Employee).filter_by(_isAdmin=True).first():
             admin = Employee(
                 firstname="Admin",
                 lastname="Bibliothèque",
@@ -59,50 +55,31 @@ def init_database():
             )
             session.add(admin)
             session.commit()
-            print("Employé admin créé")
-        else:
-            admin = existing_employee
-            print("Employé admin existant trouvé")
 
-        # Vérifier si l'auteur existe déjà
-        existing_author = session.query(Author).filter_by(_nickName="Edmond Rostand").first()
-
-        if not existing_author:
-            # Créer l'auteur Edmond Rostand
-            author = admin.addAuthor(
+        # Auteur
+        if not session.query(Author).filter_by(_nickName="Edmond Rostand").first():
+            admin.addAuthor(
                 session=session,
                 firstName="Edmond",
                 lastName="Rostand",
                 birthDate=date(1868, 4, 1),
                 nickname="Edmond Rostand"
             )
-            print("Auteur Edmond Rostand créé ✓")
-        else:
-            author = existing_author
-            print("Auteur existant trouvé ✓")
 
-        # Vérifier si l'éditeur existe déjà
-        existing_publisher = session.query(Publisher).filter_by(_name="Fasquelle").first()
-
-        if not existing_publisher:
-            # Créer l'éditeur
-            publisher = admin.addPublisher(
+        # Éditeur
+        if not session.query(Publisher).filter_by(_name="Fasquelle").first():
+            admin.addPublisher(
                 session=session,
                 name="Fasquelle",
                 location="Paris, France",
                 creationDate=date(1897, 1, 1)
             )
-            print("Éditeur Fasquelle créé ✓")
-        else:
-            publisher = existing_publisher
-            print("Éditeur existant trouvé ✓")
 
-        # Vérifier si le livre existe déjà
-        existing_book = session.query(Book).filter_by(_title="Cyrano de Bergerac").first()
-
-        if not existing_book:
-            # Ajouter le livre Cyrano de Bergerac
-            book = admin.addBook(
+        # Livre
+        if not session.query(Book).filter_by(_title="Cyrano de Bergerac").first():
+            author = session.query(Author).filter_by(_nickName="Edmond Rostand").first()
+            publisher = session.query(Publisher).filter_by(_name="Fasquelle").first()
+            admin.addBook(
                 session=session,
                 title="Cyrano de Bergerac",
                 nbPages=232,
@@ -114,19 +91,15 @@ def init_database():
                 authorId=author._id,
                 publisherId=publisher._id
             )
-            print("Livre 'Cyrano de Bergerac' ajouté")
-        else:
-            print("Livre 'Cyrano de Bergerac' existe déjà")
 
-        print("Base de données initialisée avec succès !")
+        session.commit()
 
-    except Exception as e:
+    except Exception:
         session.rollback()
-        print(f"Erreur lors de l'initialisation : {e}")
+        raise
     finally:
         session.close()
 
 
-# Appeler cette fonction pour initialiser la base
 if __name__ == "__main__":
     init_database()

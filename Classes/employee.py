@@ -6,8 +6,7 @@ Projet : Création du fichier qui contiendra la classe Employee
 from sqlalchemy import Integer, String, Float, Boolean, Date
 from sqlalchemy.orm import mapped_column, Mapped, Session
 from datetime import date, datetime, timedelta
-from person import Person
-
+from Classes.person import Person
 
 
 class Employee(Person):
@@ -37,9 +36,9 @@ class Employee(Person):
         :param bookId: ID du livre
         :return: True si l'emprunt a réussi, False sinon
         """
-        from customer import Customer
-        from books import Book
-        from borrow import Borrow
+        from Classes.customer import Customer
+        from Classes.books import Book
+        from Classes.borrow import Borrow
 
         # Vérifier que le client existe
         customer = session.query(Customer).filter_by(_id=customerId).first()
@@ -58,7 +57,9 @@ class Employee(Person):
         borrow = Borrow(
             _borrowDate=datetime.now().date(),
             _dueDate=date.today() + timedelta(days=30),
-            _returned=False
+            _returned=False,
+            book_id=bookId,
+            customer_id=customerId
         )
 
         # Mettre à jour le statut du livre
@@ -75,10 +76,10 @@ class Employee(Person):
         :param borrowId: ID de l'emprunt
         :return: True si le retour a réussi, False sinon
         """
-        from borrow import Borrow
-        from books import Book
+        from Classes.borrow import Borrow  # ← CORRIGÉ
+        from Classes.books import Book  # ← CORRIGÉ
 
-        borrow = session.query(Borrow).filter_by(_borrowDate=borrowId).first()
+        borrow = session.query(Borrow).filter_by(_id=borrowId).first()
         if not borrow:
             return False
 
@@ -101,9 +102,9 @@ class Employee(Person):
         :param newDueDate: Nouvelle date d'échéance
         :return: True si la prolongation a réussi, False sinon
         """
-        from borrow import Borrow
+        from Classes.borrow import Borrow  # ← CORRIGÉ
 
-        borrow = session.query(Borrow).filter_by(_borrowDate=borrowId).first()
+        borrow = session.query(Borrow).filter_by(_id=borrowId).first()
         if not borrow or borrow._returned:
             return False
 
@@ -114,7 +115,7 @@ class Employee(Person):
     # méthodes de gestion des clients
 
     def registerCustomer(self, session: Session, firstName: str, lastName: str,
-                        email: str, birthDate: date):
+                         email: str, birthDate: date):
         """
         Enregistre un nouveau client
         :param session: Session SQLAlchemy
@@ -124,7 +125,7 @@ class Employee(Person):
         :param birthDate: Date de naissance
         :return: Objet Customer créé
         """
-        from customer import Customer
+        from Classes.customer import Customer  # ← CORRIGÉ
 
         customer = Customer(
             firstname=firstName,
@@ -145,7 +146,7 @@ class Employee(Person):
         :param customerId: ID du client
         :param amount: Montant de l'amende
         """
-        from customer import Customer
+        from Classes.customer import Customer  # ← CORRIGÉ
 
         customer = session.query(Customer).filter_by(_id=customerId).first()
         if not customer:
@@ -161,7 +162,7 @@ class Employee(Person):
         :param customerId: ID du client
         :param amount: Montant payé
         """
-        from customer import Customer
+        from Classes.customer import Customer  # ← CORRIGÉ
 
         customer = session.query(Customer).filter_by(_id=customerId).first()
         if not customer:
@@ -192,7 +193,7 @@ class Employee(Person):
         :param publisherId: ID de l'éditeur
         :return: Objet Book créé
         """
-        from books import Book
+        from Classes.books import Book  # ← CORRIGÉ
 
         book = Book(
             _title=title,
@@ -203,6 +204,7 @@ class Employee(Person):
             _release_date=releaseDate,
             _image=image,
             _status="available",
+            author_id=authorId,
             publisher_id=publisherId
         )
 
@@ -217,7 +219,7 @@ class Employee(Person):
         :param bookId: ID du livre
         :return: True si la suppression a réussi, False sinon
         """
-        from books import Book
+        from Classes.books import Book  # ← CORRIGÉ
 
         book = session.query(Book).filter_by(_id=bookId).first()
         if not book:
@@ -230,7 +232,7 @@ class Employee(Person):
     # méthodes de gestion des employés (nécessite isAdmin=True)
 
     def addEmployee(self, session: Session, firstName: str, lastName: str,
-                   email: str, birthDate: date, salary: float, role: str):
+                    email: str, birthDate: date, salary: float, role: str):
         """
         Ajoute un nouvel employé (réservé aux admins)
         :param session: Session SQLAlchemy
@@ -264,7 +266,7 @@ class Employee(Person):
     # méthodes de gestion des auteurs
 
     def addAuthor(self, session: Session, firstName: str, lastName: str,
-                 birthDate: date, nickname: str):
+                  birthDate: date, nickname: str):
         """
         Ajoute un nouvel auteur
         :param session: Session SQLAlchemy
@@ -274,7 +276,7 @@ class Employee(Person):
         :param nickname: Pseudonyme
         :return: Objet Author créé
         """
-        from author import Author
+        from Classes.author import Author  # ← CORRIGÉ
 
         author = Author(
             firstname=firstName,
@@ -290,7 +292,7 @@ class Employee(Person):
     # méthodes de gestion des éditeurs
 
     def addPublisher(self, session: Session, name: str, location: str,
-                    creationDate: date):
+                     creationDate: date):
         """
         Ajoute un nouvel éditeur
         :param session: Session SQLAlchemy
@@ -299,7 +301,7 @@ class Employee(Person):
         :param creationDate: Date de création
         :return: Objet Publisher créé
         """
-        from publisher import Publisher
+        from Classes.publisher import Publisher  # ← CORRIGÉ
 
         publisher = Publisher(
             _name=name,

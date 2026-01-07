@@ -5,7 +5,7 @@ Projet : Création du fichier qui contiendra la classe Customer
 """
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from person import Person
+from Classes.person import Person
 
 
 class Customer(Person):
