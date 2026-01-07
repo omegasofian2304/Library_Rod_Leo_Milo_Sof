@@ -4,10 +4,10 @@ Date : 07.01.2026
 Projet : Création du fichier qui contiendra la classe Employee
 """
 from sqlalchemy import Integer, String, Float, Boolean, Date
-from sqlalchemy.orm import mapped_column, Mapped, Session, relationship
+from sqlalchemy.orm import mapped_column, Mapped, Session
 from datetime import date, datetime, timedelta
 from person import Person
-from db.database import Base
+
 
 
 class Employee(Person):
