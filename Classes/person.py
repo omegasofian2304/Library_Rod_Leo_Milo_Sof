@@ -8,9 +8,8 @@ from sqlalchemy import Integer, String, Date
 from db.database import Base
 
 
-# création de la classe abstraite Person
 class Person(Base):
-    __abstract__ = True  # nous déclarons la classe comme abstraite
+    __abstract__ = True
 
     # liste des attributs
     id: Mapped[int] = mapped_column(Integer, primary_key=True)

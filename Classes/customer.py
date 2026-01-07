@@ -4,19 +4,17 @@ Date : 17.12.2025
 Projet : Création du fichier qui contiendra la classe Customer
 """
 from sqlalchemy import Integer, String
-from sqlalchemy.orm import Mapped, MappedColumn
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from person import Person
 
 
 class Customer(Person):
     __tablename__ = 'customer'
-    ''' 
-    Remarque : En Python, les attributs précédés d'un underscore (_) ne sont pas réellement privés.
-    C'est juste une convention pour indiquer qu'ils sont destinés à un usage interne.
-    Il est toujours possible d'y accéder depuis l'extérieur de la classe (ex: instance._id).
-    '''
 
     # liste des attributs
-    _id: Mapped[int] = MappedColumn(Integer, primary_key=True)
-    _email: Mapped[str] = MappedColumn(String(50), nullable=False)
-    _fine: Mapped[int] = MappedColumn(Integer, nullable=False)
+    _id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    _email: Mapped[str] = mapped_column(String(50), nullable=False)
+    _fine: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+
+    # relation bidirectionnelle avec Borrow
+    borrows: Mapped[list["Borrow"]] = relationship("Borrow", back_populates="customer")
