@@ -23,8 +23,9 @@ class Borrow(Base):
 
     # liste des attributs
     _id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    _borrowDate: Mapped[Date] = mapped_column(Date, nullable=False)
     _returnDate: Mapped[Date] = mapped_column(Date, nullable=False)
+    _borrowDate: Mapped[Date] = mapped_column(Date, nullable=False)
+    _dueDate: Mapped[Date] = mapped_column(Date, nullable=False)
     _returned: Mapped[Boolean] = mapped_column(Boolean, nullable=False)
 
     # création des relations

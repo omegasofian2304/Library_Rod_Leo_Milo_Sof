@@ -3,7 +3,7 @@ Auteur : Sofian Hussein et Rodrigo Silva Riço
 Date : 07.01.2026
 Projet : Création du fichier qui contiendra la classe Employee
 """
-from sqlalchemy import Integer, String, Date, Float, Boolean, ForeignKey
+from sqlalchemy import Integer, String, Float, Boolean, Date
 from sqlalchemy.orm import mapped_column, Mapped, Session, relationship
 from datetime import date, datetime, timedelta
 from person import Person
@@ -58,7 +58,6 @@ class Employee(Person):
         borrow = Borrow(
             _borrowDate=datetime.now().date(),
             _dueDate=date.today() + timedelta(days=30),
-            _returnDate=None,
             _returned=False
         )
 
