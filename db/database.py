@@ -153,9 +153,4 @@ def init_database():
         session.close()
 
 
-if __name__ == "__main__":
-    print("=" * 70)
-    print("🚀 INITIALISATION DE LA BASE DE DONNÉES")
-    print("=" * 70)
-    init_database()
-    print("=" * 70)
+print("INITIALISATION DE LA BASE DE DONNÉES")
